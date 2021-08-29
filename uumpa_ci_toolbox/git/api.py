@@ -39,11 +39,13 @@ def checkout(github_repo_name=None, branch_name=None, github_token=None, fetch_d
     if config_user_name:
         common.check_call([
             'git', 'config', '--local', 'user.name', config_user_name
-        ])
+        ], cwd=path)
+        if not config_user_email:
+            config_user_email = '{}@localhost'.format(config_user_name)
     if config_user_email:
         common.check_call([
             'git', 'config', '--local', 'user.email', config_user_email
-        ])
+        ], cwd=path)
     common.check_call(['git', 'remote', 'add', 'origin', git_repo_url], cwd=path)
     common.check_call(['git', 'fetch', '--depth', str(fetch_depth), 'origin', branch_name], cwd=path)
     common.check_call(['git', 'checkout', branch_name], cwd=path)
@@ -65,3 +67,15 @@ def get_branch_name(ref=None):
 
 def get_last_commit_message():
     return subprocess.check_output(['git', 'log', '-1', '--pretty=format:%s']).decode()
+
+
+def check_last_commit_message(equals, starts_with, contains):
+    last_commit_message = get_last_commit_message().strip()
+    if equals and last_commit_message == equals:
+        return True
+    elif starts_with and last_commit_message.startswith(starts_with):
+        return True
+    elif contains and contains in last_commit_message:
+        return True
+    else:
+        return False

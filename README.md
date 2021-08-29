@@ -4,8 +4,8 @@ A set of tools (AKA toolbox) for running continuous integration workflows.
 
 ## Goals
 
-* Python as the primary language of the tools
-* No vendor lock, but can have tools to allow support of specific vendors
+* Python as the primary language
+* Minimal vendor lock
 
 ## Local Development
 

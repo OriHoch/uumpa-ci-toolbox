@@ -4,7 +4,7 @@ from ...git import api as git_api
 from ... import common
 
 
-def self_checkout(fetch_depth, path):
+def self_checkout(fetch_depth, path, config_user_name, config_user_email):
     if not path:
         path = os.path.abspath('.')
     git_api.checkout(
@@ -12,7 +12,9 @@ def self_checkout(fetch_depth, path):
         branch_name=get_branch_name(),
         fetch_depth=fetch_depth,
         github_token=os.environ['GITHUB_TOKEN'],
-        path=path
+        path=path,
+        config_user_name=config_user_name,
+        config_user_email=config_user_email
     )
 
 

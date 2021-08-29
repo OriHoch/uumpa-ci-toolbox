@@ -16,6 +16,8 @@ def git():
 @click.option('--ssh-key')
 @click.option('--ssh-key-file')
 @click.option('--path')
+@click.option('--config-user-name')
+@click.option('--config-user-email')
 def checkout(**kwargs):
     api.checkout(**kwargs)
 
@@ -39,3 +41,11 @@ def get_branch_name(**kwargs):
 @git.command()
 def get_last_commit_message():
     print(api.get_last_commit_message())
+
+
+@git.command()
+@click.option('--equals')
+@click.option('--starts-with')
+@click.option('--contains')
+def check_last_commit_message(**kwargs):
+    exit(0 if api.check_last_commit_message(**kwargs) else 1)

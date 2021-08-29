@@ -11,6 +11,8 @@ def actions():
 @actions.command()
 @click.option('--fetch-depth', default=1)
 @click.option('--path')
+@click.option('--config-user-name')
+@click.option('--config-user-email')
 def self_checkout(**kwargs):
     api.self_checkout(**kwargs)
 
