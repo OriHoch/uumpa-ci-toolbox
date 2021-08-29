@@ -1,0 +1,12 @@
+name: ci
+on:
+  push:
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  ci:
+    runs-on: ubuntu-20.04
+    steps:
+    - run: |
+      python --version
+      pip --version
