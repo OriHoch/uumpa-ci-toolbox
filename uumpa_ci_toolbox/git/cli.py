@@ -1,7 +1,5 @@
 import click
 
-from uumpa_ci_toolbox import common
-
 from . import api
 
 
@@ -17,11 +15,9 @@ def git():
 @click.option('--fetch-depth', default=1)
 @click.option('--ssh-key')
 @click.option('--ssh-key-file')
-@click.argument('SCRIPT', default="bash")
+@click.option('--path')
 def checkout(**kwargs):
-    script = kwargs.pop('script')
-    with api.checkout(**kwargs) as repodir:
-        common.check_call(script, shell=True, cwd=repodir)
+    api.checkout(**kwargs)
 
 
 @git.command()

@@ -8,5 +8,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - run: |
-      python --version
-      pip --version
+        curl -s https://raw.githubusercontent.com/OriHoch/uumpa-ci-toolbox/main/bin/github_actions_install.sh | bash -s "${GITHUB_SHA}" &&\
+        uci github actions self-checkout &&\
+        uci github actions docker-login &&\
+        uci docker build-cache --cache-from ghcr.io/orihoch/uumpa-ci-toolbox/uci -t uci . &&\
+        uci docker tag-push uci "ghcr.io/orihoch/uumpa-ci-toolbox/uci:${GITHUB_SHA}" &&\
+        if [ "$(uci github actions get-branch-name)" == "main" ]; then
+          uci docker tag-push uci "ghcr.io/orihoch/uumpa-ci-toolbox/uci:latest"
+        fi

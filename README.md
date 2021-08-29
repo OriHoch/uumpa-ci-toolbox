@@ -6,7 +6,6 @@ A set of tools (AKA toolbox) for running continuous integration workflows.
 
 * Python as the primary language of the tools
 * No vendor lock, but can have tools to allow support of specific vendors
-* All operations are stateless
 
 ## Local Development
 

@@ -1,7 +1,4 @@
-import os
 import click
-
-from uumpa_ci_toolbox import common
 
 from . import api
 
@@ -13,11 +10,9 @@ def actions():
 
 @actions.command()
 @click.option('--fetch-depth', default=1)
-@click.argument('SCRIPT', default="bash")
+@click.option('--path')
 def self_checkout(**kwargs):
-    script = kwargs.pop('script')
-    with api.self_checkout(**kwargs) as repodir:
-        common.check_call(script, shell=True, cwd=repodir)
+    api.self_checkout(**kwargs)
 
 
 @actions.command()
