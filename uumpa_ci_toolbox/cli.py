@@ -7,6 +7,10 @@ from .docker.cli import docker
 from .yaml.cli import yaml
 from .ssh.cli import ssh
 from .docs.cli import docs
+from .helm.cli import helm
+from .minikube.cli import minikube
+from .util.cli import util
+from .kubectl.cli import kubectl
 from . import version
 
 
@@ -22,6 +26,10 @@ main.add_command(docker)
 main.add_command(yaml)
 main.add_command(ssh)
 main.add_command(docs)
+main.add_command(helm)
+main.add_command(minikube)
+main.add_command(util)
+main.add_command(kubectl)
 
 
 @main.command()
