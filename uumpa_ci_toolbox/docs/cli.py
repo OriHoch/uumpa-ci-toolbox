@@ -17,7 +17,13 @@ def docs():
 @click.option('--output-file', required=True, help='path to the markdown file to update with the rendered documentation')
 @click.option('--start-line-contains', required=True, help='comment within the markdown file that marks the start of the documentation')
 @click.option('--end-line-contains', required=True, help='comment within the markdown file that marks the end of the documentation')
+@click.option('--with-timestamp', is_flag=True, help='Include a timestamp in the help markdown')
 def render_markdown_from_click_cli(**kwargs):
-    """Generate markdown documentation from a click cli command"""
-    api.render_markdown_from_click_cli(**kwargs)
-    common.cli_success()
+    """Generate markdown documentation from a click cli command.
+
+    Exits with returncode 1 if there is no change in the markdown text and returncode 0 if there was a change"""
+    if api.render_markdown_from_click_cli(**kwargs):
+        common.cli_success()
+    else:
+        print("No change in the help text")
+        exit(1)

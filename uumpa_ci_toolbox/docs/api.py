@@ -19,7 +19,7 @@ def _render_markdown_from_click_cli_command(python_venv, cli_command, command, s
     return help_markdown
 
 
-def render_markdown_from_click_cli(python_venv, cli_command, cli_module, main_command, output_file, start_line_contains, end_line_contains):
+def render_markdown_from_click_cli(python_venv, cli_command, cli_module, main_command, output_file, start_line_contains, end_line_contains, with_timestamp):
     python_bin = os.path.join(python_venv, 'bin', 'python') if python_venv else 'python'
     main_subcommands = json.loads(subprocess.check_output([python_bin, '-c', dedent("""
         import json
@@ -38,8 +38,10 @@ def render_markdown_from_click_cli(python_venv, cli_command, cli_module, main_co
         print(json.dumps(get_sub_commands({cli_module}.{main_command})))
     """.format(cli_module=cli_module, main_command=main_command))]).decode())
     help_markdown = _render_markdown_from_click_cli_command(python_venv, cli_command, [], main_subcommands)
-    help_markdown += '\n\n<!-- Generated at: {} -->\n\n'.format(datetime.datetime.now())
+    if with_timestamp:
+        help_markdown += '\n\n<!-- Generated at: {} -->\n\n'.format(datetime.datetime.now())
     lines = []
+    old_help_markdown = ''
     wait_for_end_line = False
     with open(output_file) as f:
         for line in f:
@@ -47,10 +49,16 @@ def render_markdown_from_click_cli(python_venv, cli_command, cli_module, main_co
                 if end_line_contains in line:
                     wait_for_end_line = False
                     lines.append(line)
+                else:
+                    old_help_markdown += line
             elif start_line_contains in line:
                 lines += [line, help_markdown]
                 wait_for_end_line = True
             else:
                 lines.append(line)
-    with open(output_file, 'w') as f:
-        f.writelines(lines)
+    if old_help_markdown.strip() == help_markdown.strip():
+        return False
+    else:
+        with open(output_file, 'w') as f:
+            f.writelines(lines)
+        return True
