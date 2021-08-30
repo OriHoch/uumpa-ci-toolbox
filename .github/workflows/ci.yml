@@ -16,9 +16,9 @@ jobs:
           echo "UCI_VERSION = '${GITHUB_SHA}'" > uumpa_ci_toolbox/version.py &&\
           uci github actions docker-login &&\
           uci docker build-cache --cache-from ghcr.io/orihoch/uumpa-ci-toolbox/uci -- -t uci . &&\
-          uci docker tag-push uci "ghcr.io/orihoch/uumpa-ci-toolbox/uci:${GITHUB_SHA}" &&\
+          uci docker tag-push --source-tag-name uci --push-tag-name "ghcr.io/orihoch/uumpa-ci-toolbox/uci:${GITHUB_SHA}" &&\
           if [ "$(uci github actions get-branch-name)" == "main" ]; then
-            uci docker tag-push uci "ghcr.io/orihoch/uumpa-ci-toolbox/uci:latest" &&\
+            uci docker tag-push --source-tag-name uci --push-tag-name "ghcr.io/orihoch/uumpa-ci-toolbox/uci:latest" &&\
             git add uumpa_ci_toolbox/version.py &&\
             git commit -m "automatic update" &&\
             git push &&\
