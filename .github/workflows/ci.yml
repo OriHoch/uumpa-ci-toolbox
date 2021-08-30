@@ -9,9 +9,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - run: |
-        curl -s https://raw.githubusercontent.com/OriHoch/uumpa-ci-toolbox/main/bin/github_actions_install.sh | bash -s "${GITHUB_SHA}" &&\
+        curl -s https://raw.githubusercontent.com/OriHoch/uumpa-ci-toolbox/main/bin/github_actions_install.sh \
+          | bash -s "${GITHUB_SHA}" &&\
         uci github actions self-checkout --config-user-name "uumpa-ci-toolbox-ci" &&\
-        if ! uci git check-last-commit-message --equals "automatic version update"; then
+        if ! uci git check-last-commit-message --equals "automatic update"; then
           echo "UCI_VERSION = '${GITHUB_SHA}'" > uumpa_ci_toolbox/version.py &&\
           uci github actions docker-login &&\
           uci docker build-cache --cache-from ghcr.io/orihoch/uumpa-ci-toolbox/uci -- -t uci . &&\
@@ -19,7 +20,17 @@ jobs:
           if [ "$(uci github actions get-branch-name)" == "main" ]; then
             uci docker tag-push uci "ghcr.io/orihoch/uumpa-ci-toolbox/uci:latest" &&\
             git add uumpa_ci_toolbox/version.py &&\
-            git commit -m "automatic version update" &&\
-            git push
+            git commit -m "automatic update" &&\
+            git push &&\
+            uci git checkout \
+              --github-repo-name OriHoch/uumpa-ci-toolbox --branch-name main --ssh-key "${UCI_DEPLOY_KEY}" \
+              --path .ucitoolbox --config-user-name "ucitoolbox-ci" &&\
+            cd .ucitoolbox &&\
+            uci docs render-markdown-from-click-cli \
+              --cli-command uci --main-command main --cli-module uumpa_ci_toolbox.cli --output-file README.md \
+              --start-line-contains '<!-- start reference -->' --end-line-contains '<!-- end reference -->' &&\
+            uci yaml update '{"last_github_sha":"'${GITHUB_SHA}'"}' test.yaml &&\
+            git add README.md test.yaml &&\
+            git commit -m "automatic update" && git push
           fi
         fi
