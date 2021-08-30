@@ -400,7 +400,10 @@ Commands:
 ```
 Usage: uci docs render-markdown-from-click-cli [OPTIONS]
 
-  Generate markdown documentation from a click cli command
+  Generate markdown documentation from a click cli command.
+
+  Exits with returncode 1 if there is no change in the markdown text and
+  returncode 0 if there was a change
 
 Options:
   --python-venv TEXT          path to Python virtualenv which has the relevant
@@ -417,6 +420,7 @@ Options:
                               start of the documentation  [required]
   --end-line-contains TEXT    comment within the markdown file that marks the
                               end of the documentation  [required]
+  --with-timestamp            Include a timestamp in the help markdown
   --help                      Show this message and exit.
 ```
 
@@ -537,8 +541,4 @@ Usage: uci version [OPTIONS]
 Options:
   --help  Show this message and exit.
 ```
-
-
-<!-- Generated at: 2021-08-30 06:57:16.268324 -->
-
 <!-- end reference -->
