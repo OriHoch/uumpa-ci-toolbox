@@ -26,8 +26,12 @@ Commands:
   docs
   git
   github
+  helm
+  kubectl
+  minikube
   ssh
-  version  Print the Uumpa CI Toolbox version
+  util      Misc.
+  version   Print the Uumpa CI Toolbox version
   yaml
 ```
 
@@ -416,6 +420,113 @@ Options:
   --help                      Show this message and exit.
 ```
 
+#### uci helm
+
+```
+Usage: uci helm [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  install  Install Helm client in the given version
+```
+
+#### uci helm install
+
+```
+Usage: uci helm install [OPTIONS]
+
+  Install Helm client in the given version
+
+Options:
+  --version TEXT          Helm version to install, e.g. "v3.2.4"  [required]
+  --target-filename TEXT
+  --with-sudo
+  --help                  Show this message and exit.
+```
+
+#### uci minikube
+
+```
+Usage: uci minikube [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  install  Install Minikube in the given version
+```
+
+#### uci minikube install
+
+```
+Usage: uci minikube install [OPTIONS]
+
+  Install Minikube in the given version
+
+Options:
+  --version TEXT          Minikube version to install, e.g. "v1.21.0"
+                          [required]
+  --target-filename TEXT
+  --with-sudo
+  --help                  Show this message and exit.
+```
+
+#### uci util
+
+```
+Usage: uci util [OPTIONS] COMMAND [ARGS]...
+
+  Misc. utilities and helper commands
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  wait-for  Calls the condition script every second until it exits with...
+```
+
+#### uci util wait-for
+
+```
+Usage: uci util wait-for [OPTIONS] CONDITION_SCRIPT
+
+  Calls the condition script every second until it exits with returncode 0
+
+Options:
+  --timeout-seconds INTEGER  [required]
+  --timeout-message TEXT
+  --help                     Show this message and exit.
+```
+
+#### uci kubectl
+
+```
+Usage: uci kubectl [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  install  Install Kubectl in the given version
+```
+
+#### uci kubectl install
+
+```
+Usage: uci kubectl install [OPTIONS]
+
+  Install Kubectl in the given version
+
+Options:
+  --version TEXT          Kubectl version to install, e.g. "v1.19.0"
+                          [required]
+  --target-filename TEXT
+  --with-sudo
+  --help                  Show this message and exit.
+```
+
 #### uci version
 
 ```
@@ -428,6 +539,6 @@ Options:
 ```
 
 
-<!-- Generated at: 2021-08-30 06:23:46.910860 -->
+<!-- Generated at: 2021-08-30 06:57:16.268324 -->
 
 <!-- end reference -->
