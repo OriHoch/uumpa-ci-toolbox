@@ -10,7 +10,7 @@ def checkout(github_repo_name=None, branch_name=None, github_token=None, fetch_d
     assert github_repo_name, 'github repo name is required as no other git repository types are supported at the moment'
     assert branch_name, 'branch name is required'
     assert path, 'path is required'
-    common.check_call(['git', 'init', path])
+    common.check_call(['git', 'init', '-b', 'main', path])
     if subprocess.call(['git', 'config', '--local', 'gc.auto', '0'], cwd=path) != 0:
         print('WARNING! Failed to disable git garbage collection, fetch operation may cause a delay.')
     if github_token:
