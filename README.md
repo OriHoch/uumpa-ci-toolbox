@@ -32,6 +32,7 @@ Commands:
   ssh
   util      Misc.
   version   Print the Uumpa CI Toolbox version
+  webmon
   yaml
 ```
 
@@ -529,6 +530,64 @@ Options:
   --target-filename TEXT
   --with-sudo
   --help                  Show this message and exit.
+```
+
+#### uci webmon
+
+```
+Usage: uci webmon [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  start        Starts a web service which runs the given python_code on...
+  start-multi  Starts multiple webmon services listening on the same port...
+```
+
+#### uci webmon start
+
+```
+Usage: uci webmon start [OPTIONS] PORT PYTHON_CODE
+
+  Starts a web service which runs the given python_code on each request.
+
+  This is useful for monitoring things, a web monitoring service can be
+  connected to it and alert on abstract conditions
+
+  The python_code should define a webmon() function which returns a tuple of
+  (boolean, dict)
+
+  All code, including imports should be within the webmon function
+
+  python_code example:
+
+  def webmon():   import random   if random.randint(0,1):     return True,
+  {'hello': 'world'}   else:     return False, {'error': 'failed'}
+
+Options:
+  --help  Show this message and exit.
+```
+
+#### uci webmon start-multi
+
+```
+Usage: uci webmon start-multi [OPTIONS] PORT CONFIG_FILE
+
+  Starts multiple webmon services listening on the same port based on a yaml
+  config file
+
+  Example config file:
+
+  webmons:   - path: /random     # all code, including imports should be
+  within the webmon function     python_code: |       def webmon():
+  import random         if random.randint(0,1):           return True,
+  {'hello': 'world'}         else:           return False, {'error': 'failed'}
+  - path: /test     # all code, including imports should be within the webmon
+  function     python_file: /path/to/my_code.py
+
+Options:
+  --help  Show this message and exit.
 ```
 
 #### uci version
