@@ -30,9 +30,10 @@ Commands:
   kubectl
   minikube
   ssh
-  util      Misc.
+  terraform
+  util       Misc.
   vault
-  version   Print the Uumpa CI Toolbox version
+  version    Print the Uumpa CI Toolbox version
   webmon
   yaml
 ```
@@ -612,6 +613,33 @@ Usage: uci vault install [OPTIONS]
 
 Options:
   --version TEXT          Vault version to install, e.g. "1.10.4"  [required]
+  --target-filename TEXT
+  --with-sudo
+  --help                  Show this message and exit.
+```
+
+#### uci terraform
+
+```
+Usage: uci terraform [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  install  Install Terraform in the given version
+```
+
+#### uci terraform install
+
+```
+Usage: uci terraform install [OPTIONS]
+
+  Install Terraform in the given version
+
+Options:
+  --version TEXT          Terraform version to install, e.g. "1.2.2"
+                          [required]
   --target-filename TEXT
   --with-sudo
   --help                  Show this message and exit.
