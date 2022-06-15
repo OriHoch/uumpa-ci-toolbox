@@ -601,7 +601,9 @@ Options:
   --help  Show this message and exit.
 
 Commands:
-  install  Install Vault in the given version
+  approle-login   Login to Vault, returns the Vault token
+  create-approle  Create an approle to be used in automation
+  install         Install Vault in the given version
 ```
 
 #### uci vault install
@@ -616,6 +618,30 @@ Options:
   --target-filename TEXT
   --with-sudo
   --help                  Show this message and exit.
+```
+
+#### uci vault create-approle
+
+```
+Usage: uci vault create-approle [OPTIONS]
+
+  Create an approle to be used in automation
+
+Options:
+  --role TEXT    [required]
+  --policy TEXT  [required]
+  --help         Show this message and exit.
+```
+
+#### uci vault approle-login
+
+```
+Usage: uci vault approle-login [OPTIONS] ROLE_ID SECRET_ID
+
+  Login to Vault, returns the Vault token
+
+Options:
+  --help  Show this message and exit.
 ```
 
 #### uci terraform
