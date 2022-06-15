@@ -13,6 +13,7 @@ from .util.cli import util
 from .kubectl.cli import kubectl
 from .webmon.cli import webmon
 from .vault.cli import vault
+from .terraform.cli import terraform
 from . import version
 
 
@@ -34,6 +35,7 @@ main.add_command(util)
 main.add_command(kubectl)
 main.add_command(webmon)
 main.add_command(vault)
+main.add_command(terraform)
 
 
 @main.command()
