@@ -604,6 +604,7 @@ Commands:
   approle-login   Login to Vault, returns the Vault token
   create-approle  Create an approle to be used in automation
   install         Install Vault in the given version
+  read-env-vars   Output Vault values as env vars
 ```
 
 #### uci vault install
@@ -639,6 +640,17 @@ Options:
 Usage: uci vault approle-login [OPTIONS] ROLE_ID SECRET_ID
 
   Login to Vault, returns the Vault token
+
+Options:
+  --help  Show this message and exit.
+```
+
+#### uci vault read-env-vars
+
+```
+Usage: uci vault read-env-vars [OPTIONS] PATH VALUES_JSON
+
+  Output Vault values as env vars
 
 Options:
   --help  Show this message and exit.
