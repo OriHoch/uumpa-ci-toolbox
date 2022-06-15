@@ -31,6 +31,7 @@ Commands:
   minikube
   ssh
   util      Misc.
+  vault
   version   Print the Uumpa CI Toolbox version
   webmon
   yaml
@@ -588,6 +589,32 @@ Usage: uci webmon start-multi [OPTIONS] PORT CONFIG_FILE
 
 Options:
   --help  Show this message and exit.
+```
+
+#### uci vault
+
+```
+Usage: uci vault [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  install  Install Vault in the given version
+```
+
+#### uci vault install
+
+```
+Usage: uci vault install [OPTIONS]
+
+  Install Vault in the given version
+
+Options:
+  --version TEXT          Vault version to install, e.g. "1.10.4"  [required]
+  --target-filename TEXT
+  --with-sudo
+  --help                  Show this message and exit.
 ```
 
 #### uci version
