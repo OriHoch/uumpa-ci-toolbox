@@ -37,3 +37,11 @@ def create_approle(**kwargs):
 def approle_login(**kwargs):
     """Login to Vault, returns the Vault token"""
     print(api.approle_login(**kwargs))
+
+
+@vault.command()
+@click.argument('PATH')
+@click.argument('VALUES_JSON')
+def read_env_vars(**kwargs):
+    """Output Vault values as env vars"""
+    api.read_env_vars(**kwargs)

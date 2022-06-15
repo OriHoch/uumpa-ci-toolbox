@@ -1,4 +1,5 @@
 import os
+import json
 import tempfile
 from ..common import check_call, check_output_json
 
@@ -27,3 +28,11 @@ def create_approle(role, policy):
 def approle_login(role_id, secret_id):
     assert os.environ.get('VAULT_ADDR'), 'missing VAULT_ADDR env var containing the URL to the Vault instance'
     return check_output_json(['vault', 'write', 'auth/approle/login', f'role_id={role_id}', f'secret_id={secret_id}', '-format=json'])['auth']['client_token']
+
+
+def read_env_vars(path, values_json):
+    values = json.loads(values_json)
+    data = check_output_json(['vault', 'read', path, '-format=json'])['data']['data']
+    for k, v in values.items():
+        v = data[v].replace("'", "\\'")
+        print(f"{k}='{v}'")
