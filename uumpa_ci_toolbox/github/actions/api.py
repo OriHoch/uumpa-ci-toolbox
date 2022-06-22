@@ -9,7 +9,7 @@ def self_checkout(fetch_depth, path, config_user_name, config_user_email):
         path = os.path.abspath('.')
     git_api.checkout(
         github_repo_name=os.environ['GITHUB_REPOSITORY'],
-        branch_name=get_branch_name(),
+        branch_name=os.environ['GITHUB_REF'],
         fetch_depth=fetch_depth,
         github_token=os.environ['GITHUB_TOKEN'],
         path=path,
