@@ -6,9 +6,12 @@ from uumpa_ci_toolbox import common
 
 
 def checkout(github_repo_name=None, branch_name=None, github_token=None, fetch_depth=1, ssh_key=None, ssh_key_file=None,
-             config_user_name=None, config_user_email=None, path=None):
+             config_user_name=None, config_user_email=None, path=None, tag_name=None):
     assert github_repo_name, 'github repo name is required as no other git repository types are supported at the moment'
-    assert branch_name, 'branch name is required'
+    if branch_name:
+        assert not tag_name, 'cannot specify both branch name and tag name'
+    else:
+        assert tag_name, 'must specify either branch_name or tag_name'
     assert path, 'path is required'
     common.check_call(['git', 'init', '-b', 'main', path])
     if subprocess.call(['git', 'config', '--local', 'gc.auto', '0'], cwd=path) != 0:
@@ -47,8 +50,14 @@ def checkout(github_repo_name=None, branch_name=None, github_token=None, fetch_d
             'git', 'config', '--local', 'user.email', config_user_email
         ], cwd=path)
     common.check_call(['git', 'remote', 'add', 'origin', git_repo_url], cwd=path)
-    common.check_call(['git', 'fetch', '--depth', str(fetch_depth), 'origin', branch_name], cwd=path)
-    common.check_call(['git', 'checkout', branch_name], cwd=path)
+    if branch_name:
+        common.check_call(['git', 'fetch', '--depth', str(fetch_depth), 'origin', branch_name], cwd=path)
+        common.check_call(['git', 'checkout', branch_name], cwd=path)
+    elif tag_name:
+        common.check_call(['git', 'fetch', '--depth', str(fetch_depth), '--tags', 'origin'], cwd=path)
+        common.check_call(['git', 'checkout', f'tags/{tag_name}'], cwd=path)
+    else:
+        raise Exception("Either branch_name or tag_name must be set")
 
 
 def get_tag_name(ref=None):

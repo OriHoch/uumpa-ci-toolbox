@@ -11,7 +11,8 @@ def git():
 
 @git.command()
 @click.option('--github-repo-name', required=True, help='in the format of owner/repo (e.g. "OriHoch/uumpa-ci-toolbox")')
-@click.option('--branch-name', required=True)
+@click.option('--branch-name')
+@click.option('--tag-name')
 @click.option('--github-token', help='GitHub personal access token to authenticate for write access')
 @click.option('--fetch-depth', default=1, help='How many commits to fetch')
 @click.option('--ssh-key', help='content of private ssh key which can be used for write access to the repo')

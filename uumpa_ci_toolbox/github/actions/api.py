@@ -7,9 +7,11 @@ from ... import common
 def self_checkout(fetch_depth, path, config_user_name, config_user_email):
     if not path:
         path = os.path.abspath('.')
+    tag_name = get_tag_name()
     git_api.checkout(
         github_repo_name=os.environ['GITHUB_REPOSITORY'],
-        branch_name=os.environ['GITHUB_REF'],
+        branch_name=get_branch_name() if not tag_name else None,
+        tag_name=tag_name,
         fetch_depth=fetch_depth,
         github_token=os.environ['GITHUB_TOKEN'],
         path=path,
