@@ -64,7 +64,8 @@ Usage: uci git checkout [OPTIONS]
 Options:
   --github-repo-name TEXT   in the format of owner/repo (e.g. "OriHoch/uumpa-
                             ci-toolbox")  [required]
-  --branch-name TEXT        [required]
+  --branch-name TEXT
+  --tag-name TEXT
   --github-token TEXT       GitHub personal access token to authenticate for
                             write access
   --fetch-depth INTEGER     How many commits to fetch
